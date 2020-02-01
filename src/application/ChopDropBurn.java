@@ -32,7 +32,7 @@ public class ChopDropBurn extends Script {
 
 	private Position playerPosition;
 
-	private long startTime; //testTime;
+	private long startTime;
 
 	private boolean inputAccepted = false, shouldChop = true;
 
@@ -40,11 +40,9 @@ public class ChopDropBurn extends Script {
 
 	private String[] groundObjects = {"Fire", "Daisies", "Fern", "Stones", "Thistle", "Small fern"};
 
-	private int logsChopped = 0, firesMade = 0, startingLevelWC, startingLevelFM; //pseudoAntiBanCounter;
+	private int logsChopped = 0, firesMade = 0, startingLevelWC, startingLevelFM;
 
 	private String[] typesOfAxes = {"Bronze axe", "Iron axe", "Steel axe", "Mithril axe", "Adamant axe", "Rune axe", "Dragon axe"};
-
-	//private String[] inventoryList = {"Tinderbox", "Bronze axe", "Iron axe", "Steel axe", "Mithril axe", "Adamant axe", "Rune axe", "Dragon axe"};
 
 	private String[] typesOfLogs = {"Logs", "Oak logs", "Willow logs", "Maple logs", "Mahogany logs", "Yew logs", "Magic logs"};
 
@@ -141,6 +139,7 @@ public class ChopDropBurn extends Script {
 						sleep(400);
 						log("Burning");
 					} else {
+						walkToStartingPosition();
 						break;
 					}
 					new ConditionalSleep(3000) {
@@ -244,7 +243,6 @@ public class ChopDropBurn extends Script {
 		if (inputAccepted) { 
 			if (m.getMessage().contains("You get some")) logsChopped++;
 			if (m.getMessage().contains("The fire catches")) firesMade++;
-			//if (m.getMessage().contains("You can't light")) movePosition();
 			if (m.getMessage().contains("You need a Firemaking level of")) stop();
 			if (m.getMessage().contains("You do not have an axe which you have")) stop();
 			if (m.getMessage().contains("I can't reach")) walkToStartingPosition();
@@ -257,7 +255,7 @@ public class ChopDropBurn extends Script {
 		if(inputAccepted) {
 
 			String currentTime = formatTime(System.currentTimeMillis() - startTime);
-			//testTime = (System.currentTimeMillis() - startTime) / 60000;
+			
 			g.setColor(Color.black);
 			g.setColor(new Color(0, 0, 0, 200));
 			g.fillRect(7, 345, 506, 130);
@@ -274,7 +272,6 @@ public class ChopDropBurn extends Script {
 			g.drawString("Time Ran: " + currentTime, 20, 398);
 			g.drawString("Cutting " + selectedTree + " Trees", 140, 398);
 			g.drawString("We Are " + selectedAction, 280, 398);
-			//g.drawString("pAB Actions: " + pseudoAntiBanCounter, 380, 398);
 
 			g.drawString("Logs Chopped: " + logsChopped, 20, 418); 
 			g.drawString("W.C. XP Gained: " + getExperienceTracker().getGainedXP(Skill.WOODCUTTING), 140, 418); 
